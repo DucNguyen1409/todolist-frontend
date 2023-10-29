@@ -1,0 +1,92 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: burlywood;
+    display: flex;
+    justify-content: center;
+    font-family: 'Trebuchet MS', Arial, sans-serif;
+}
+
+.app {
+    background-color: rgb(255,255,255);
+    box-shadow: rgba(0,0,0, 0.05) 0 6px 24px, rgba(0,0,0, 0.08) 0 0 0 1px;
+    border-radius: 10px;
+    padding: 10px;
+    width: 800px;
+    margin-top: 50px;
+}
+.button-container, .info-container {
+    display: flex;
+    align-items: center;
+}
+
+
+.button-container button {
+    margin: 0 5px;
+    padding: 5px 10px;
+    font-size: 10px;
+    border-radius: 12px;
+    background-color: transparent;
+}
+
+.edit {
+    border: 1.5px solid rgb(141, 181, 145);
+    color: rgb(141, 181, 145);
+    background-color: transparent;
+    text-transform: uppercase;
+}
+
+.edit:hover {
+    background-color: rgb(182, 223, 186);
+}
+
+.edit:active {
+    border: 1.5px solid rgb(141, 181, 145);
+    color: rgb(255, 255, 255);
+    background-color: rgb(141, 181, 145);
+}
+
+.delete {
+    border: 1.5px solid rgb(189, 57, 13);
+    color: rgb(189, 57, 13);
+    background-color: transparent;
+    text-transform: uppercase;
+}
+
+.delete:hover {
+    background-color: rgb(235, 127, 87);
+}
+
+.delete:active {
+    border: 1.5px solid rgb(189, 57, 13);
+    color: rgb(255, 255, 255);
+    background-color: rgb(182, 44, 39);
+}
+
+.list-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: rgba(0,0,0,0, 0.05) 1px solid;
+}
+
+.list-item {
+    width: 100%;
+    margin: 10px 0;
+    border-radius: 10px;
+    box-shadow: rgba(0,0,0, 0.08) 0 0 0 1px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.tick {
+    padding: 10px;
+}
+
+ /* .tick path {
+    fill: none;
+    stroke: #000;
+    stroke-miterlimit: 10;
+    stroke-width: 32px;
+} */
+
