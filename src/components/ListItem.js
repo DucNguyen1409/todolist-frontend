@@ -1,6 +1,14 @@
-import TickIcon from './TickIcon'
+import TickIcon from './TickIcon';
+import Modal from './Modal';
+import { useState } from 'react';
 
-const ListItem = ({task}) => {
+const ListItem = ({ task }) => {
+    const [showModal, setShowModal] = useState(false)
+    
+    const onDelete = () => {
+
+    };
+
     return (
      <li className="list-item">
 
@@ -10,9 +18,10 @@ const ListItem = ({task}) => {
         </div>
 
         <div className="button-container">
-          <button className='edit'>Edit</button>
-          <button className='delete'>Delete</button>
+          <button className='edit' onClick={() => setShowModal(true)}>Edit</button>
+          <button className='delete' onClick={onDelete}>Delete</button>
         </div>
+        {showModal && <Modal mode={'edit'} setShowModal={setShowModal} task={task}/>}
 
       </li>
     );
