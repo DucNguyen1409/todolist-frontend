@@ -3,11 +3,10 @@ import ListHeader from './components/ListHeader'
 import ListItem from './components/ListItem'
 
 const App = () => {
-  const userId = '55bce169-38c2-4494-b117-9ec818095726'
+  const userId = '3d2a013a-3935-4150-8a86-d9969a8e23f2';
   const [ tasks, setTasks ] = useState(null)
 
-  const getData = async () => {
-
+  const getTodos = async () => {
     try {
       const response = await fetch(`http://localhost:8080/api/v1/todos/by-user/${userId}`) 
       const json = await response.json()
@@ -16,16 +15,14 @@ const App = () => {
       console.error(err)
     }
   }
-  useEffect(() => getData, [])
-
-  console.log(tasks)
+  useEffect(() => getTodos, [])
 
   const sortedTasks = tasks?.sort((a,b) => new Date(a.createdDate) - new Date(b.date))
 
   return (
    <div className="app">
-    <ListHeader listName={'To do list'} />
-    {sortedTasks?.map((task) => <ListItem key={task.id} task={task} />)}
+    <ListHeader listName={'To do list'} getTodos={getTodos} />
+      {sortedTasks?.map((task) => <ListItem key={task.id} task={task} getTodos={getTodos} />)}
     </div>
   );
 }

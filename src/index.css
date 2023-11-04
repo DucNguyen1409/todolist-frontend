@@ -102,6 +102,13 @@ input {
     border: 1.5px solid rgb(230, 232, 236);
 }
 
+button {
+    margin: 11px 0;
+    padding: 12px 16px;
+    border-radius: 12px;
+    border: 1.5px solid rgb(230, 232, 236);
+}
+
 .list-header {
     width: 100%;
     display: flex;
