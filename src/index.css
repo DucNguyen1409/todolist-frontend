@@ -1,7 +1,7 @@
 body {
     margin: 0;
     padding: 0;
-    background-color: burlywood;
+    background-color: rgb(208, 231, 220);
     display: flex;
     justify-content: center;
     font-family: 'Trebuchet MS', Arial, sans-serif;
@@ -127,6 +127,13 @@ button {
 
 .tick {
     padding: 10px;
+    width: 25;
+    height: 25; 
+}
+
+.done {
+    text-decoration: line-through;
+    background: #dddddd;
 }
 
  /* .tick path {
@@ -177,4 +184,43 @@ button {
 
 .modal label {
     font-size: 13px;
+}
+
+/* Auth */
+.auth-container {
+    display: flex;
+    justify-content: center;
+    margin: 5px;
+}
+
+.auth-container-box {
+    width: 500px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: rgba(0,0,0, 0.05) 0 6px 24px, rgba(0,0,0, 0.08) 0 0 0 1px;
+}
+
+.auth-container-box form {
+    display: flex;
+    flex-direction: column;
+    height: 350px;
+    padding: 20px;
+}
+
+.auth-options {
+    display: flex;
+}
+
+.auth-options button {
+    width: 50%;
+    border: 50px;
+    padding: 10px;
+    color: rgb(35, 38, 47);
+}
+
+.user-name {
+    float: right;
+    font-size: 15px;
+    margin: 10px;
+    color: rgb(114, 114, 144);
 }

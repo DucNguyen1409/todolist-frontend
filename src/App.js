@@ -1,28 +1,45 @@
 import { useEffect, useState } from 'react'
 import ListHeader from './components/ListHeader'
 import ListItem from './components/ListItem'
+import Auth from './components/Auth';
+import { useCookies } from 'react-cookie';
 
 const App = () => {
-  const userId = '3d2a013a-3935-4150-8a86-d9969a8e23f2';
+  const [cookies, setCookie, removeCookie] = useCookies(null)
+  const authToken = cookies.AccessToken;
+  const userId = cookies.UserId;
+  const userName = cookies.UserName;
   const [ tasks, setTasks ] = useState(null)
 
   const getTodos = async () => {
     try {
-      const response = await fetch(`http://localhost:8080/api/v1/todos/by-user/${userId}`) 
+      const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/todos/by-user/${userId}`) 
       const json = await response.json()
       setTasks(json)
     } catch (err) {
       console.error(err)
     }
   }
-  useEffect(() => getTodos, [])
+  useEffect(() => {
+    if (authToken) {
+      getTodos()
+    }    
+  }, [])
 
+  // sort task by created date
   const sortedTasks = tasks?.sort((a,b) => new Date(a.createdDate) - new Date(b.date))
 
   return (
    <div className="app">
-    <ListHeader listName={'To do list'} getTodos={getTodos} />
-      {sortedTasks?.map((task) => <ListItem key={task.id} task={task} getTodos={getTodos} />)}
+    { !authToken && <Auth/>}
+
+    { authToken &&
+      <>
+        <ListHeader listName={'To do list'} getTodos={getTodos} />
+        <p className='user-name'>Welcome {userName}!</p>
+        { sortedTasks?.map((task) => <ListItem key={task.id} task={task} getTodos={getTodos} />)}
+      </>
+    }
     </div>
   );
 }

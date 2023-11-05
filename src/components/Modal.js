@@ -1,19 +1,21 @@
 import { useState } from "react";
+import { useCookies } from "react-cookie";
 
 const Modal = ({ mode, setShowModal, getTodos, task }) => {
+    const [cookies, setCookie, removeCookie] = useCookies(null)
     const editMode = mode === 'edit' ? true : false;
     
     const [data, setData] = useState({
       title: editMode ? task.title : '',
       status: 'NEW',
-      createdBy: '3d2a013a-3935-4150-8a86-d9969a8e23f2'
+      createdBy: cookies.UserId
     });
 
     // func: create todo
     const createTodoTask = async (e) => {
       e.preventDefault();
       try {
-        const response = await fetch('http://localhost:8080/api/v1/todos', {
+        const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/todos`, {
           method: "POST",
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data)
@@ -33,7 +35,7 @@ const Modal = ({ mode, setShowModal, getTodos, task }) => {
     const editTodoTask = async (e) => {
       e.preventDefault();
       try {
-        const response = await fetch(`http://localhost:8080/api/v1/todos/${task.id}`, {
+        const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/todos/${task.id}`, {
           method: "PUT",
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data)
