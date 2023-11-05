@@ -51,7 +51,7 @@ const ListItem = ({ task, getTodos }) => {
           className="info-container" 
           onClick={updateTaskStatus}
         >
-          <TickIcon isCompleted={isCompleted}/>
+          <TickIcon />
           <p className="task-title">{task.title}</p>
         </div>
 
