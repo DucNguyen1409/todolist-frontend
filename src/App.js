@@ -5,7 +5,7 @@ import Auth from './components/Auth';
 import { useCookies } from 'react-cookie';
 
 const App = () => {
-  const [cookies, setCookie, removeCookie] = useCookies(null)
+  const [cookies] = useCookies(null)
   const authToken = cookies.AccessToken;
   const userId = cookies.UserId;
   const userName = cookies.UserName;
@@ -13,17 +13,25 @@ const App = () => {
 
   const getTodos = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/todos/by-user/${userId}`) 
+      const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/todos/by-user/${userId}`, {
+        method: "GET", 
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${cookies.AccessToken}`
+        }
+      });
+
       const json = await response.json()
       setTasks(json)
     } catch (err) {
       console.error(err)
     }
   }
+
   useEffect(() => {
     if (authToken) {
       getTodos()
-    }    
+    }
   }, [])
 
   // sort task by created date

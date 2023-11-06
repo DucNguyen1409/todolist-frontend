@@ -1,8 +1,10 @@
 import TickIcon from './TickIcon';
 import Modal from './Modal';
 import { useState } from 'react';
+import { useCookies } from 'react-cookie';
 
 const ListItem = ({ task, getTodos }) => {
+    const [cookies] = useCookies(null)
     const [showModal, setShowModal] = useState(false);
     const isCompleted = (task.status === 'NEW') ? false : true;
     
@@ -11,7 +13,11 @@ const ListItem = ({ task, getTodos }) => {
       e.preventDefault();
       try {
         const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/todos/${task.id}`, {
-          method: "DELETE"
+          method: "DELETE", 
+          headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${cookies.AccessToken}`
+          }
         });
 
         if (response.status === 200) {
@@ -34,7 +40,11 @@ const ListItem = ({ task, getTodos }) => {
 
       try {
         const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/todos/${task.id}?status=${status}`, {
-          method: "PATCH"
+          method: "PATCH",
+          headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${cookies.AccessToken}`
+          }
         });
 
         if (response.status === 200) {

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useCookies } from "react-cookie";
 
 const Modal = ({ mode, setShowModal, getTodos, task }) => {
-    const [cookies, setCookie, removeCookie] = useCookies(null)
+    const [cookies] = useCookies(null)
     const editMode = mode === 'edit' ? true : false;
     
     const [data, setData] = useState({
@@ -17,7 +17,10 @@ const Modal = ({ mode, setShowModal, getTodos, task }) => {
       try {
         const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/todos`, {
           method: "POST",
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${cookies.AccessToken}`
+          },
           body: JSON.stringify(data)
         });
 
@@ -37,7 +40,10 @@ const Modal = ({ mode, setShowModal, getTodos, task }) => {
       try {
         const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/todos/${task.id}`, {
           method: "PUT",
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${cookies.AccessToken}`
+          },
           body: JSON.stringify(data)
         });
 
