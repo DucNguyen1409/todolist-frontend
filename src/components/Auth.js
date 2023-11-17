@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useCookies } from "react-cookie";
+import { registerUserAPI } from "../api";
 
 const Auth = () => {
   const [cookies, setCookie, removeCookie] = useCookies(null) 
@@ -40,26 +41,16 @@ const Auth = () => {
       };
     }
 
-    try {
-      const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/auth/${endpoint}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(requestData)
-      });
-
-      const data = await response.json()
-      if (data.access_token) {
-        setCookie('UserId', data.userId)
-        setCookie('Email', data.email)
-        setCookie('UserName', data.lastName)
-        setCookie('AccessToken', data.access_token)
-        setCookie('RefreshToken', data.refresh_token)
+    registerUserAPI(endpoint, requestData).then(response => {
+      if (response.access_token) {
+        setCookie('UserId', response.userId)
+        setCookie('Email', response.email)
+        setCookie('UserName', response.lastName)
+        setCookie('AccessToken', response.access_token)
+        setCookie('RefreshToken', response.refresh_token)
         window.location.reload();
       }
-    } catch (err) {
-      setError(err)
-      console.log(err)
-    }
+    })
     
   }
 

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useCookies } from "react-cookie";
+import { createToDoAPI, editToDoTask } from "../api";
 
 const Modal = ({ mode, setShowModal, getTodos, task }) => {
     const [cookies] = useCookies(null)
@@ -14,46 +15,38 @@ const Modal = ({ mode, setShowModal, getTodos, task }) => {
     // func: create todo
     const createTodoTask = async (e) => {
       e.preventDefault();
-      try {
-        const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/todos`, {
-          method: "POST",
-          headers: { 
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${cookies.AccessToken}`
-          },
-          body: JSON.stringify(data)
-        });
 
-        if (response.status === 201) {
-          setShowModal(false);
-          getTodos();
-        }
-
-      } catch(err) {
-        console.log(err)
-      }
+      createToDoAPI(data, cookies.AccessToken).then(() => {
+        setShowModal(false);
+        getTodos();
+      });
     }
 
     // func: edit todo
     const editTodoTask = async (e) => {
       e.preventDefault();
-      try {
-        const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/todos/${task.id}`, {
-          method: "PUT",
-          headers: { 
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${cookies.AccessToken}`
-          },
-          body: JSON.stringify(data)
-        });
+      // try {
+      //   const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/todos/${task.id}`, {
+      //     method: "PUT",
+      //     headers: { 
+      //       'Content-Type': 'application/json',
+      //       'Authorization': `Bearer ${cookies.AccessToken}`
+      //     },
+      //     body: JSON.stringify(data)
+      //   });
 
-        if (response.status === 200) {
-          setShowModal(false)
-          getTodos()
-        }
-      } catch (err) {
-        console.log(err)
-      }
+      //   if (response.status === 200) {
+      //     setShowModal(false)
+      //     getTodos()
+      //   }
+      // } catch (err) {
+      //   console.log(err)
+      // }
+
+      editToDoTask(task.id, data, cookies.AccessToken).then(() => {
+        setShowModal(false)
+        getTodos()
+      })
     }
 
     const handleOnChange = (e) => {
