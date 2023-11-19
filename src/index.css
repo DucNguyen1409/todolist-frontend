@@ -219,7 +219,6 @@ button {
 }
 
 .user-name {
-    float: right;
     font-size: 15px;
     margin: 10px;
     color: rgb(114, 114, 144);

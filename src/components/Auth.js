@@ -1,9 +1,8 @@
 import { useState } from "react";
-import { useCookies } from "react-cookie";
 import { registerUserAPI } from "../api";
+import { saveUserTokenInfo } from "../utils/LocalStorageUtils";
 
 const Auth = () => {
-  const [cookies, setCookie, removeCookie] = useCookies(null) 
   const [isLogIn, setIsLogIn] = useState(true);
   const [userName, setUserName] = useState('');
   const [email, setEmail] = useState('');
@@ -42,12 +41,8 @@ const Auth = () => {
     }
 
     registerUserAPI(endpoint, requestData).then(response => {
-      if (response.access_token) {
-        setCookie('UserId', response.userId)
-        setCookie('Email', response.email)
-        setCookie('UserName', response.lastName)
-        setCookie('AccessToken', response.access_token)
-        setCookie('RefreshToken', response.refresh_token)
+      if (response.accessToken) {
+        saveUserTokenInfo(response);
         window.location.reload();
       }
     })

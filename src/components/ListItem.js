@@ -1,11 +1,9 @@
 import TickIcon from './TickIcon';
 import Modal from './Modal';
 import { useState } from 'react';
-import { useCookies } from 'react-cookie';
 import { deleteToDoTask, updateToDoStatus } from '../api';
 
 const ListItem = ({ task, getTodos }) => {
-    const [cookies] = useCookies(null)
     const [showModal, setShowModal] = useState(false);
     const isCompleted = (task.status === 'NEW') ? false : true;
     
@@ -13,7 +11,7 @@ const ListItem = ({ task, getTodos }) => {
     const deleteTodoTask = async (e) => {
       e.preventDefault();
 
-      deleteToDoTask(task.id, cookies.AccessToken).then(() => {
+      deleteToDoTask(task.id).then(() => {
         setShowModal(false)
         getTodos()
       })
@@ -28,7 +26,7 @@ const ListItem = ({ task, getTodos }) => {
         status = 'COMPLETED';
       }
 
-      updateToDoStatus(task.id, status, cookies.AccessToken).then(() => {
+      updateToDoStatus(task.id, status).then(() => {
         getTodos()
       })
     }

@@ -2,14 +2,15 @@ import { useEffect, useState } from 'react'
 import ListHeader from './components/ListHeader'
 import ListItem from './components/ListItem'
 import Auth from './components/Auth';
-import { useCookies } from 'react-cookie';
 import { fetchToDosAPI } from './api';
+import { getLocalStorageItemByKey } from './utils/LocalStorageUtils';
+import { Authenticate } from './utils/constants';
 
 const App = () => {
-  const [cookies] = useCookies(null)
-  const authToken = cookies.AccessToken;
-  const userId = cookies.UserId;
-  const userName = cookies.UserName;
+  const authToken = getLocalStorageItemByKey(Authenticate.ACCESS_TOKEN);
+  const userId = getLocalStorageItemByKey(Authenticate.USER_ID);
+  const userName = getLocalStorageItemByKey(Authenticate.USER_NAME);
+  
   const [ tasks, setTasks ] = useState(null)
 
   const getTodos = async () => {
